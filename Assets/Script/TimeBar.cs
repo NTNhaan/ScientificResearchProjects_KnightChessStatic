@@ -5,49 +5,51 @@ using UnityEngine.UI;
 
 public class TimeBar : MonoBehaviour
 {
+    public enum Role
+    {
+        Player,
+        Demon
+    }
     public Slider TimeSliderDemon;
     public Slider TimeSliderHero;
-    public float MaxTime = 100f;
-    private float LerpSpeed = 10f;
-    public bool timeout;
-
-    public void Start()
-    {
+    public float MaxTime = 100;
+    public Role role;
+    public void Awake() {
         TimeSliderHero.value = MaxTime;
         TimeSliderDemon.value = MaxTime;
-        timeout = true;
     }
-
+    public void Start()
+    {
+        role = Role.Player;
+    }
+    public void SwapRole()
+    {
+        if(role == Role.Player)
+        {
+            role = Role.Demon;
+            //Debug.Log("Role: " + role);
+            TimeSliderHero.value = MaxTime;
+        }
+        else if(role == Role.Demon)
+        {
+            role = Role.Player;
+            //Debug.Log("Role: " + role);
+            TimeSliderDemon.value = MaxTime;
+        }
+    }
     public void Update()
     {
-        if (timeout)
+        if(role == Role.Player)
         {
-            TimeSliderHero.value -= Time.deltaTime * LerpSpeed;
+            TimeSliderHero.value -= Time.deltaTime * 10;
             if(TimeSliderHero.value <= 0)
-            {
-                timeout = false;
-                TimeSliderHero.value = MaxTime;
-            }
+                SwapRole();
         }
-        else
+        else if(role == Role.Demon)
         {
-            TimeSliderDemon.value -= Time.deltaTime * LerpSpeed;
+            TimeSliderDemon.value -= Time.deltaTime * 10;
             if(TimeSliderDemon.value <= 0)
-            {
-                timeout = true;
-                TimeSliderDemon.value = MaxTime;
-            }
-        } 
-    }
-    public float TakeTime(float time)
-    {
-        if (time <= 0)
-        {
-            return 0;
-        }
-        else
-        {
-            return Mathf.Lerp(time, 0, LerpSpeed * Time.deltaTime);
+                SwapRole();
         }
     }
 }
