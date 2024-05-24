@@ -37,6 +37,7 @@ public class Grid : MonoBehaviour
 
     private Dictionary<PieceType, GameObject> _piecePrefabDict;
     private GamePieces[,] _pieces;
+    private GameObject[,] _pieces1;
     public Vector2[,] backgroundPositions;
 
     private GameObject prefab;  // the variable must be declared prior to use
@@ -53,9 +54,8 @@ public class Grid : MonoBehaviour
     // Update is called once per 
     private TimeBar.Role role;
     [SerializeField] public TimeBar timeswap;
-    void Start()
+    void Awake()
     {
-        callChessBoard();
         newPieces = new GameObject();
         oldPrefabPos = new Vector3(-6, -6, 0);
         prefabSize = new Vector2(0, 0);
@@ -63,13 +63,37 @@ public class Grid : MonoBehaviour
         role = TimeBar.Role.Player;
         timeswap = FindObjectOfType<TimeBar>();
     }
+    void Start()
+    {
+        _piecePrefabDict = new Dictionary<PieceType, GameObject>();
+        for (int i = 0; i < piecePrefabs.Length; i++)
+        {
+            if (!_piecePrefabDict.ContainsKey(piecePrefabs[i].type))
+            {
+                _piecePrefabDict.Add(piecePrefabs[i].type, piecePrefabs[i].prefab);
+            }
+        }
+        for (int x = 0; x < xDim; x++)
+        {
+            for (int y = 0; y < yDim; y++)
+            {
+                GameObject bg = (GameObject)Instantiate(backgroundPrefab, GetWorldPosition(x * 2, y * 2, 0), Quaternion.identity);
+                bg.transform.parent = transform;
+            }
+        }
+        _pieces = new GamePieces[xDim, yDim];
+        for (int x = 0; x < xDim; x++)
+        {
+            for (int y = 0; y < yDim; y++)
+            {
+                SpawnNewPiece(x, y, PieceType.EMPTY);
+            }
+        }
+        StartCoroutine(Fill());
+    }
 
     public IEnumerator Fill()
     {
-        while (FillStep())
-        {
-            yield return new WaitForSeconds(FillTime);
-        }
         for (int i = 0; i < _pieces.GetLength(0); i++)
         {
             for (int j = 0; j < _pieces.GetLength(1); j++)
@@ -78,20 +102,20 @@ public class Grid : MonoBehaviour
                 Debug.Log("Value of arrays _piece " + _pieces[i, j] + " is " + piece.X + " " + piece.Y);
             }
         }
+        while (FillStep())
+        {
+            yield return new WaitForSeconds(FillTime);
+        }
     }
     public bool FillStep()
     {
-        Vector3 PiecePosition = new Vector3();
         bool movedPiece = false;
         for (int y = yDim - 2; y >= 0; y--)
         {
             for (int x = 0; x < xDim; x++)
             {
-                PiecePosition = backgroundPositions[y, x];
-                int tmpx = Mathf.FloorToInt(PiecePosition.x);
-                int tmpy = Mathf.FloorToInt(PiecePosition.y);
                 GamePieces piece = _pieces[x, y];
-                piece.name = "Piece(" + x + "," + y + ")" + "[" + tmpx + "," + tmpy + "]";
+                piece.name = "Piece(" + x + "," + y + ")" + "[" + piece.X + "," + piece.Y + "]";
                 if (piece.IsMoveable())
                 {
                     GamePieces pieceBelow = _pieces[x, y + 1];
@@ -99,10 +123,10 @@ public class Grid : MonoBehaviour
                     if (pieceBelow.Type == PieceType.EMPTY)
                     {
                         Destroy(pieceBelow.gameObject);
-                        Debug.Log("Spawn piece for the second row and fill chessboard:  " + "[" + tmpx + "," + tmpy + "]");
-                        piece.MovableComponent.Move(tmpx, tmpy + 3, FillTime);
+                        //Debug.Log("Spawn piece for the second row and fill chessboard:  " + "[" + tmpx + "," + tmpy + "]");
+                        piece.MovableComponent.Move(x, y + 1, FillTime);
                         _pieces[x, y + 1] = piece;
-                        SpawnNewPiece(x, y, PieceType.EMPTY, PiecePosition);
+                        SpawnNewPiece(x, y, PieceType.EMPTY);
                         movedPiece = true;
                     }
                 }
@@ -110,24 +134,20 @@ public class Grid : MonoBehaviour
         }
         for (int x = 0; x < xDim; x++)
         {
-            int tmpx = Mathf.FloorToInt(PiecePosition.x - 15);
-            int tmpy = Mathf.FloorToInt(PiecePosition.y);
             GamePieces pieceBelow = _pieces[x, 0];
             if (pieceBelow.Type == PieceType.EMPTY)
             {
                 Destroy(pieceBelow.gameObject);
-                GameObject newPiece = (GameObject)Instantiate(_piecePrefabDict[PieceType.NORMAL], Vector3.zero, Quaternion.identity);
-                Debug.Log("Spawn piece for the top row is " + x + ": " + "[" + tmpx + "," + tmpy + "]");
+                GameObject newPiece = (GameObject)Instantiate(_piecePrefabDict[PieceType.NORMAL], GetWorldPosition(x, -1, 0), Quaternion.identity);
                 newPiece.transform.parent = transform;
                 // cập nhật thông tin của gamepiece cho prefab piece mới
                 _pieces[x, 0] = newPiece.GetComponent<GamePieces>();
-                _pieces[x, 0].Init(tmpx, tmpy, this, PieceType.NORMAL);
-                _pieces[x, 0].MovableComponent.Move(tmpx, tmpy, FillTime);
+                _pieces[x, 0].Init(x, -1, this, PieceType.NORMAL);
+                _pieces[x, 0].MovableComponent.Move(x, 0, FillTime);
                 int randomIndex = UnityEngine.Random.Range(0, _pieces[x, 0].ItemComponent.NumItems);
                 _pieces[x, 0].ItemComponent.SetItem((ItemPieces.ItemType)randomIndex);
                 movedPiece = true;
             }
-            PiecePosition.x += 3;
         }
         return movedPiece;
     }
@@ -160,7 +180,7 @@ public class Grid : MonoBehaviour
                 prefabHeigt = Mathf.RoundToInt(prefabSize.y);
 
                 background.transform.parent = transform;
-                SpawnNewPiece(x, y, PieceType.EMPTY, oldPrefabPos);
+                SpawnNewPiece(x, y, PieceType.EMPTY);
                 backgroundPositions[x, y] = oldPrefabPos;           // SAU KHI DUYỆT XONG THÌ CỘNG TIẾP WIDTH CỦA PREFAB ĐỂ CÓ THỂ RESET LẠI DÒNG
                 oldPrefabPos.x += prefabWidth;
             }
@@ -177,16 +197,13 @@ public class Grid : MonoBehaviour
         }
         // Destroy(_pieces[3, 3].gameObject);
         // SpawnNewPiece(3, 3, PieceType.BUBBLE, oldPrefabPos);
-        StartCoroutine(Fill());
+        //StartCoroutine(Fill());
     }
 
 
-    public GamePieces SpawnNewPiece(int x, int y, PieceType type, Vector3 newposition)
+    public GamePieces SpawnNewPiece(int x, int y, PieceType type)
     {
-        // int tmpx = Mathf.FloorToInt((newposition.x + 6) /  prefabWidth);
-        // int tmpy = Mathf.FloorToInt((newposition.y + 6) /  prefabWidth);
-
-        GameObject newPiece = (GameObject)Instantiate(_piecePrefabDict[type], GetWorldPosition(newposition.x, newposition.y, -5), Quaternion.identity);
+        GameObject newPiece = (GameObject)Instantiate(_piecePrefabDict[type], GetWorldPosition(x, y, 0), Quaternion.identity);
         newPiece.transform.parent = transform;
         _pieces[x, y] = newPiece.GetComponent<GamePieces>();
         _pieces[x, y].Init(x, y, this, type);
@@ -194,155 +211,81 @@ public class Grid : MonoBehaviour
     }
     private static bool IsAdjacent(GamePieces piece1, GamePieces piece2)
     {
-        int dx = Mathf.Abs(piece1.Y - piece2.Y);
-        int dy = Mathf.Abs(piece1.X - piece2.X);
-        return (piece1.X == piece2.X && (int)Mathf.Abs(piece1.Y - piece2.Y) == 3) ||
-        (piece1.Y == piece2.Y && (int)Mathf.Abs(piece1.X - piece2.X) == 3);
+        return (piece1.X == piece2.X && (int)Mathf.Abs(piece1.Y - piece2.Y) == 1) ||
+        (piece1.Y == piece2.Y && (int)Mathf.Abs(piece1.X - piece2.X) == 1);
 
     }
-    public (int, int) ChangeData(int tmp1x, int tmp1y, GamePieces buttonPiece)
+    public void SwapPiece(GamePieces piece1, GamePieces piece2)
     {
-        Debug.Log("DataChanged: " + buttonPiece.X + " " + buttonPiece.Y);
-        for (int i = 0; i < xDim; i++)
+        if (!piece1.IsMoveable() && !piece2.IsMoveable())
         {
-            for (int j = 0; j < yDim; j++)
-            {
-                var value = _pieces[i, j];
-                if (value == buttonPiece)
-                {
-                    tmp1x = i;
-                    tmp1y = j;
-
-                    Debug.Log("Checked data for piece: " + " arrays: " + value + " prefab: " + buttonPiece);
-                }
-            }
-        }
-        return (tmp1x, tmp1y);
-    }
-    public void SwapPiece(GamePieces pieces1, GamePieces pieces2)
-    {
-        if (!pieces1.IsMoveable() && !pieces2.IsMoveable())
-        {
-            Debug.Log("Can't swap piece, so piece is null " + pieces1 + " " + pieces2);
+            Debug.Log("Can't swap piece, so piece is null " + piece1 + " " + piece2);
             return;
         }
-        int tmp1x = 0, tmp1y = 0, tmp2x = 0, tmp2y = 0;
-        ChangeData(tmp1x, tmp1y, pieces1);
-        ChangeData(tmp2x, tmp2y, pieces2);
-
-        _pieces[tmp1x, tmp1y] = pieces2;
-        _pieces[tmp2x, tmp2y] = pieces1;
-
-        var match1 = GetMatch(pieces1, pieces2.X, pieces2.Y);
-        var match2 = GetMatch(pieces2, pieces1.X, pieces1.Y);
-        Debug.Log("CheckMatch: " + match1 + " " + match2);
+        _pieces[piece1.X, piece1.Y] = piece2;
+        _pieces[piece2.X, piece2.Y] = piece1;
+        var match1 = GetMatch(piece1, piece2.X, piece2.Y);
+        var match2 = GetMatch(piece2, piece1.X, piece1.Y);
         if (match1 != null || match2 != null)
         {
-            int piece1X = pieces1.X;
-            int piece1Y = pieces1.Y;
-            pieces1.MovableComponent.Move(pieces2.X, pieces2.Y, FillTime);
-            pieces2.MovableComponent.Move(piece1X, piece1Y, FillTime);
-            ClearAllValidMatches();
+            int piece1X = piece1.X;
+            int piece1Y = piece1.Y;
+            piece1.MovableComponent.Move(piece2.X, piece2.Y, FillTime);
+            piece2.MovableComponent.Move(piece1X, piece1Y, FillTime);
+            //ClearAllValidMatches();
         }
         else
         {
-            _pieces[tmp1x, tmp1y] = pieces1;
-            _pieces[tmp2x, tmp2y] = pieces2;
+            // _pieces[piece1.X, piece1.Y] = piece1;
+            // _pieces[piece2.X, piece2.Y] = piece2;
+            StartCoroutine(SwapPiecesBack(piece1, piece2, FillTime));
         }
     }
-    public void PressPiece(GamePieces piece)
+    IEnumerator SwapPiecesBack(GamePieces piece1, GamePieces piece2, float delay)
     {
-        pressedPiece = piece;
-        Debug.Log("location for PressPiece: " + piece.X + " " + piece.Y);
-    }
-    public void EnterPiece(GamePieces piece)
-    {
-        enteredPiece = piece;
-        Debug.Log("location for EnterPiece: " + piece.X + " " + piece.Y);
-    }
-    public void ReleasePiece()
-    {
-        if (pressedPiece == enteredPiece)
-        {
-            Debug.Log("Overlapping piece =((");
-            return;
-        }
-        else
-        {
-            if (IsAdjacent(pressedPiece, enteredPiece))
-            {
-                Debug.Log("IsAdjacent is true =))");
-                SwapPiece(pressedPiece, enteredPiece);
-                //Debug.Log("piece after swap: "+ "Piece1: " + pressedPiece.X + " " + pressedPiece.Y + "Piece2: " + enteredPiece.X + " " + enteredPiece.Y);
-            }
-            timeswap.SwapRole();
-        }
+        yield return new WaitForSeconds(delay);
+        _pieces[piece1.X, piece1.Y] = piece2;
+        _pieces[piece2.X, piece2.Y] = piece1;
+        int piece1X = piece1.X;
+        int piece1Y = piece1.Y;
+        piece1.MovableComponent.Move(piece2.X, piece2.Y, FillTime);
+        piece2.MovableComponent.Move(piece1X, piece1Y, FillTime);
     }
     public List<GamePieces> GetMatch(GamePieces piece, int NewX, int NewY)
     {
         if (piece.IsItemed())
         {
             ItemPieces.ItemType type = piece.ItemComponent.Item;
-            var typetest = piece.ItemComponent.Item;
             List<GamePieces> horizontalPieces = new List<GamePieces>();
             List<GamePieces> verticalPieces = new List<GamePieces>();
             List<GamePieces> matchingPieces = new List<GamePieces>();
             horizontalPieces.Add(piece);
             for (int dir = 0; dir <= 1; dir++)
             {
-                for (int count = 1, xOffset = 3; count < 6; count++, xOffset += 3)
+                for (int xOffset = 1; xOffset < xDim; xOffset++)
                 {
                     int x;
                     if (dir == 0) x = NewX - xOffset; // left
                     else x = NewX + xOffset; // right
-                    if (x < -6 || x >= 9 || count >= 6)
+                    if (x < 0 || x >= xDim || xOffset >= xDim)
                     {
                         break;
                     }
-                    // if(x<0 || x>=xDim || NewY<0 || NewY>=yDim) // check điều kiện vượt quá checkboard
-                    // {
-                    //     Debug.Log("position over valiable arrays: " + "X: " + x + " Y: " + NewY + " " + "Prefab: " + piece + " " + "Type: " + type);
-                    //     break;
-                    // }
-                    Debug.Log("DatafirstchangeHorizental: " + "X: " + x + " Y: " + NewY);
-                    int tmpx = 0, tmpy = 0;
-                    for (int i = 0; i < xDim; i++)
+                    if (_pieces[x, NewY].IsItemed() && _pieces[x, NewY].ItemComponent.Item == type)
                     {
-                        for (int j = 0; j < yDim; j++)
-                        {
-                            GamePieces value = _pieces[i, j];
-                            Debug.Log("Dataisnull" + value.X + " " + value.Y + " " + "Piece: " + x + " " + NewY);
-                            if (value.X == x && value.Y == NewY)
-                            {
-                                Debug.Log("ValueogArrays" + i + " " + j + "Arrays: " + value.X + " " + value.Y);
-                                tmpx = i;
-                                tmpy = j;
-                                break;
-                            }
-                        }
-                    }
-                    if (_pieces[tmpx, tmpy].IsItemed() && _pieces[tmpx, tmpy].ItemComponent.Item == type)
-                    {
-                        Debug.Log("PieceTypeHorizontal: " + _pieces[tmpx, tmpy].ItemComponent.Item);
-                        horizontalPieces.Add(_pieces[tmpx, tmpy]);
-                        for (int i = 0; i < horizontalPieces.Count; i++)
-                        {
-                            Debug.Log("PieceTypeHorizontal" + horizontalPieces.Count + " " + horizontalPieces[i].ItemComponent.Item);
-                        }
+                        horizontalPieces.Add(_pieces[x, NewY]);
                     }
                     else
                     {
-                        Debug.Log("Piecenotitemed Horizontal: " + _pieces[tmpx, tmpy].ItemComponent.Item);
                         break;
                     }
                 }
             }
             if (horizontalPieces.Count >= 3)
             {
-                matchingPieces.AddRange(horizontalPieces);
                 for (int i = 0; i < horizontalPieces.Count; i++)
                 {
-                    //matchingPieces.Add(horizontalPieces[i]);
+                    matchingPieces.Add(horizontalPieces[i]);
                     Debug.Log("PieceTypeHorizontalList: " + horizontalPieces[i].ItemComponent.Item);
                 }
             }
@@ -355,56 +298,31 @@ public class Grid : MonoBehaviour
             verticalPieces.Add(piece);
             for (int dir = 0; dir <= 1; dir++)
             {
-                for (int count = 1, yOffset = 3; count < 6; count++, yOffset += 3)
+                for (int yOffset = 1; yOffset < yDim; yOffset++)
                 {
                     int y;
-                    if (dir == 0) y = NewY - yOffset; // up
-                    else y = NewY + yOffset; // down
-
-                    if (y < -6 || y >= 9 || count >= 6)
+                    if (dir == 0) y = NewY - yOffset; // left
+                    else y = NewY + yOffset; // right
+                    if (y < 0 || y >= yDim || yOffset >= yDim)
                     {
                         break;
                     }
-                    Debug.Log("DatafirstchangeVertical: " + "X: " + NewX + " Y: " + y);
-                    int tmpx = 0, tmpy = 0;
-                    for (int i = 0; i < xDim; i++)
+                    if (_pieces[NewX, y].IsItemed() && _pieces[NewX, y].ItemComponent.Item == type)
                     {
-                        for (int j = 0; j < yDim; j++)
-                        {
-                            GamePieces value = _pieces[i, j];
-                            Debug.Log("Dataisnull" + value.X + " " + value.Y + " " + "Piece: " + NewX + " " + y);
-                            if (value.X == NewX && value.Y == y)
-                            {
-                                Debug.Log("ValueogArrays" + i + " " + j + "Arrays: " + value.X + " " + value.Y);
-                                tmpx = i;
-                                tmpy = j;
-                                break;
-                            }
-                        }
-                    }
-                    if (_pieces[tmpx, tmpy].IsItemed() && _pieces[tmpx, tmpy].ItemComponent.Item == type)
-                    {
-                        Debug.Log("PieceTypeVertical: " + _pieces[tmpx, tmpy].ItemComponent.Item);
-                        verticalPieces.Add(_pieces[tmpx, tmpy]);
-                        for (int i = 0; i < verticalPieces.Count; i++)
-                        {
-                            Debug.Log("PieceTypeVertical" + verticalPieces.Count + " " + verticalPieces[i].ItemComponent.Item);
-                        }
+                        verticalPieces.Add(_pieces[NewX, y]);
                     }
                     else
                     {
-                        Debug.Log("Piecenotitemed Vertical: " + _pieces[tmpx, tmpy].ItemComponent.Item);
                         break;
                     }
                 }
             }
             if (verticalPieces.Count >= 3)
             {
-                matchingPieces.AddRange(verticalPieces);
                 for (int i = 0; i < verticalPieces.Count; i++)
                 {
-                    //matchingPieces.Add(verticalPieces[i]);
-                    Debug.Log("PieceTypeVerticallList: " + verticalPieces[i].ItemComponent.Item);
+                    matchingPieces.Add(verticalPieces[i]);
+                    Debug.Log("PieceTypeVerticalList: " + verticalPieces[i].ItemComponent.Item);
                 }
             }
             if (matchingPieces.Count >= 3)
@@ -446,12 +364,11 @@ public class Grid : MonoBehaviour
         GamePieces piece = new GamePieces();
         piece.X = x;
         piece.Y = y;
-        ChangeData(tmpx, tmpy, piece);
         Debug.Log("PieceClearedValueable" + tmpx + " " + tmpy);
         if (_pieces[tmpx, tmpy].IsClearable() && !_pieces[tmpx, tmpy].ClearableComponent.IsBeingCleared)
         {
             _pieces[tmpx, tmpy].ClearableComponent.Clear();
-            SpawnNewPiece(tmpx, tmpy, PieceType.EMPTY, backgroundPositions[tmpx, tmpy]);
+            SpawnNewPiece(tmpx, tmpy, PieceType.EMPTY);
             return true;
         }
         return false;
@@ -472,8 +389,88 @@ public class Grid : MonoBehaviour
     public Vector3 GetWorldPosition(float x, float y, float z)
     {
         return new Vector3(
-            transform.position.x - xDim / 2.0f + x + 1.5f,
-            transform.position.y + yDim / 2.0f - y - 2.5f,
+            transform.position.x - xDim / 2.0f + x - 3,
+            transform.position.y + yDim / 2.0f - y + 2,
             transform.position.z);
     }
+    public void PressPiece(GamePieces piece)
+    {
+        pressedPiece = piece;
+        Debug.Log("location for PressPiece: " + piece.X + " " + piece.Y);
+    }
+    public void EnterPiece(GamePieces piece)
+    {
+        enteredPiece = piece;
+        Debug.Log("location for EnterPiece: " + piece.X + " " + piece.Y);
+    }
+    public void ReleasePiece()
+    {
+        if (pressedPiece == enteredPiece)
+        {
+            Debug.Log("Overlapping piece =((");
+            return;
+        }
+        else
+        {
+            if (IsAdjacent(pressedPiece, enteredPiece))
+            {
+                Debug.Log("IsAdjacent is true =))");
+                SwapPiece(pressedPiece, enteredPiece);
+                //Debug.Log("piece after swap: "+ "Piece1: " + pressedPiece.X + " " + pressedPiece.Y + "Piece2: " + enteredPiece.X + " " + enteredPiece.Y);
+            }
+            timeswap.SwapRole();
+        }
+    }
 }
+
+
+
+
+// void callChessBoard()
+//     {
+//         backgroundPositions = new Vector2[xDim, yDim];
+//         _piecePrefabDict = new Dictionary<PieceType, GameObject>();
+//         for (int i = 0; i < piecePrefabs.Length; i++)
+//         {
+//             if (!_piecePrefabDict.ContainsKey(piecePrefabs[i].type))
+//             {
+//                 _piecePrefabDict.Add(piecePrefabs[i].type, piecePrefabs[i].prefab);
+//             }
+//         }
+//         Vector3 oldPrefabPos = new Vector3(-6, -6, -4);  // tạo một biến oldprefab chứa position
+//         Vector2 prefabSize = new Vector2(0, 0);
+//         Vector3 firstPrefab = new Vector3(oldPrefabPos.x, 0, 0);
+//         _pieces = new GamePieces[xDim, yDim];
+//         for (int x = 0; x < xDim; x++)
+//         {
+//             for (int y = 0; y < yDim; y++)
+//             {
+//                 // set POISITION cho prefabBackground
+//                 GameObject background = (GameObject)Instantiate(backgroundPrefab, GetWorldPosition(oldPrefabPos.x, oldPrefabPos.y, -4), Quaternion.identity);
+
+//                 background.name = "Prefab " + "[" + x + "," + y + "]" + "[" + oldPrefabPos.x + "," + oldPrefabPos.y + "," + oldPrefabPos.z + "]";
+//                 prefabSize = GetPrefabSize(background);
+//                 // lấy scale của prefab
+//                 prefabWidth = Mathf.RoundToInt(prefabSize.x);
+//                 prefabHeigt = Mathf.RoundToInt(prefabSize.y);
+
+//                 background.transform.parent = transform;
+//                 SpawnNewPiece(x, y, PieceType.EMPTY, oldPrefabPos);
+//                 backgroundPositions[x, y] = oldPrefabPos;           // SAU KHI DUYỆT XONG THÌ CỘNG TIẾP WIDTH CỦA PREFAB ĐỂ CÓ THỂ RESET LẠI DÒNG
+//                 oldPrefabPos.x += prefabWidth;
+//             }
+//             prefabWidth = 0;
+//             oldPrefabPos.x = firstPrefab.x;  // số position x khi reset về vẫn chưa hoàng hảo lắm.
+//             oldPrefabPos.y += prefabHeigt;
+//         }
+//         for (int i = 0; i < backgroundPositions.GetLength(0); i++)
+//         {
+//             for (int j = 0; j < backgroundPositions.GetLength(1); j++)
+//             {
+//                 Debug.Log("Position at background [" + i + ", " + j + "]: " + backgroundPositions[i, j]);
+//             }
+//         }
+//         // Destroy(_pieces[3, 3].gameObject);
+//         // SpawnNewPiece(3, 3, PieceType.BUBBLE, oldPrefabPos);
+//         //StartCoroutine(Fill());
+//     }
