@@ -1,4 +1,0 @@
-repository "Childhoods@nhannguyen300819900@cloud"
-  path "/"
-    br "/main"
-    co "/main"
