@@ -18,48 +18,52 @@ public class GamePieces : MonoBehaviour
     //-----------Constructor
     public int X
     {
-        get{return _x; }
-        set {
-            if(IsMoveable())
+        get { return _x; }
+        set
+        {
+            if (IsMoveable())
             {
                 _x = value;
             }
         }
     }
-    public int Y{
-        get{return _y;}
-        set{
-            if(IsMoveable())
+    public int Y
+    {
+        get { return _y; }
+        set
+        {
+            if (IsMoveable())
             {
                 _y = value;
             }
         }
-    }    
+    }
     public Grid.PieceType Type
     {
-        get {return _type;}
+        get { return _type; }
     }
     public Grid GridRef
     {
-        get {return _grid;}
+        get { return _grid; }
     }
     public MovablePiece MovableComponent
     {
-        get{return movableComponent;}
+        get { return movableComponent; }
     }
     public ItemPieces ItemComponent
     {
-        get{return itemComponent;}
+        get { return itemComponent; }
     }
     private ClearablePiece clearablePiece;
     public ClearablePiece ClearableComponent
     {
-        get{return clearablePiece;}
+        get { return clearablePiece; }
     }
 
 
 
-    private void Awake() {
+    private void Awake()
+    {
         movableComponent = GetComponent<MovablePiece>();
         itemComponent = GetComponent<ItemPieces>();
         clearablePiece = GetComponent<ClearablePiece>();
@@ -72,7 +76,7 @@ public class GamePieces : MonoBehaviour
         _type = type;
     }
     private void OnMouseEnter() => _grid.EnterPiece(this);
-    private void OnMouseDown() =>  _grid.PressPiece(this);
+    private void OnMouseDown() => _grid.PressPiece(this);
     private void OnMouseUp() => _grid.ReleasePiece();
     public bool IsMoveable()
     {
@@ -84,6 +88,6 @@ public class GamePieces : MonoBehaviour
     }
     public bool IsClearable()
     {
-        return clearablePiece != null;
+        return ClearableComponent != null;
     }
 }

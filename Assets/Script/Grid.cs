@@ -37,7 +37,8 @@ public class Grid : MonoBehaviour
 
     private Dictionary<PieceType, GameObject> _piecePrefabDict;
     private GamePieces[,] _pieces;
-    private GameObject[,] _pieces1;
+    private bool _inverse;
+
     public Vector2[,] backgroundPositions;
 
     private GameObject prefab;  // the variable must be declared prior to use
@@ -94,17 +95,24 @@ public class Grid : MonoBehaviour
 
     public IEnumerator Fill()
     {
-        for (int i = 0; i < _pieces.GetLength(0); i++)
-        {
-            for (int j = 0; j < _pieces.GetLength(1); j++)
-            {
-                GamePieces piece = _pieces[i, j];
-                Debug.Log("Value of arrays _piece " + _pieces[i, j] + " is " + piece.X + " " + piece.Y);
-            }
-        }
-        while (FillStep())
+        // for (int i = 0; i < _pieces.GetLength(0); i++)
+        // {
+        //     for (int j = 0; j < _pieces.GetLength(1); j++)
+        //     {
+        //         GamePieces piece = _pieces[i, j];
+        //         Debug.Log("Value of arrays _piece " + _pieces[i, j] + " is " + piece.X + " " + piece.Y);
+        //     }
+        // }
+        bool needRefill = true;
+        while (needRefill)
         {
             yield return new WaitForSeconds(FillTime);
+            while (FillStep())
+            {
+                _inverse = !_inverse;
+                yield return new WaitForSeconds(FillTime);
+            }
+            needRefill = ClearAllValidMatches();
         }
     }
     public bool FillStep()
@@ -232,12 +240,11 @@ public class Grid : MonoBehaviour
             int piece1Y = piece1.Y;
             piece1.MovableComponent.Move(piece2.X, piece2.Y, FillTime);
             piece2.MovableComponent.Move(piece1X, piece1Y, FillTime);
-            //ClearAllValidMatches();
+            ClearAllValidMatches();
+            StartCoroutine(Fill());
         }
         else
         {
-            // _pieces[piece1.X, piece1.Y] = piece1;
-            // _pieces[piece2.X, piece2.Y] = piece2;
             StartCoroutine(SwapPiecesBack(piece1, piece2, FillTime));
         }
     }
@@ -248,8 +255,19 @@ public class Grid : MonoBehaviour
         _pieces[piece2.X, piece2.Y] = piece1;
         int piece1X = piece1.X;
         int piece1Y = piece1.Y;
+        int piece2X = piece2.X;
+        int piece2Y = piece2.Y;
         piece1.MovableComponent.Move(piece2.X, piece2.Y, FillTime);
         piece2.MovableComponent.Move(piece1X, piece1Y, FillTime);
+
+        // Wait for another delay
+        yield return new WaitForSeconds(delay);
+
+        // Swap back
+        _pieces[piece1.X, piece1.Y] = piece1;
+        _pieces[piece2.X, piece2.Y] = piece2;
+        piece1.MovableComponent.Move(piece1X, piece1Y, FillTime);
+        piece2.MovableComponent.Move(piece2X, piece2Y, FillTime);
     }
     public List<GamePieces> GetMatch(GamePieces piece, int NewX, int NewY)
     {
@@ -289,11 +307,45 @@ public class Grid : MonoBehaviour
                     Debug.Log("PieceTypeHorizontalList: " + horizontalPieces[i].ItemComponent.Item);
                 }
             }
+
+            // Traverse vertically if we found a match (3 or more pieces)
+            if (horizontalPieces.Count >= 3)
+            {
+                for (int i = 0; i < horizontalPieces.Count; i++)
+                {
+                    for (int dir = 0; dir <= 1; dir++)
+                    {
+                        for (int yOffset = 1; yOffset < yDim; yOffset++)
+                        {
+                            int y;
+                            if (dir == 0) y = NewY - yOffset;
+                            else y = NewY + yOffset;
+                            if (y < 0 || y >= yDim) break;
+                            if (_pieces[horizontalPieces[i].X, y].IsItemed() && _pieces[horizontalPieces[i].X, y].ItemComponent.Item == type)
+                            {
+                                verticalPieces.Add(_pieces[horizontalPieces[i].X, y]);
+                            }
+                            else break;
+                        }
+                    }
+                    if (verticalPieces.Count < 2)
+                        verticalPieces.Clear();
+                    else
+                    {
+                        for (int j = 0; j < verticalPieces.Count; j++)
+                        {
+                            matchingPieces.Add(verticalPieces[j]);
+                        }
+                        break;
+                    }
+                }
+            }
             if (matchingPieces.Count >= 3)
             {
                 return matchingPieces;
             }
-
+            horizontalPieces.Clear();
+            verticalPieces.Clear();
             //check verticalPiece-------------------
             verticalPieces.Add(piece);
             for (int dir = 0; dir <= 1; dir++)
@@ -323,6 +375,38 @@ public class Grid : MonoBehaviour
                 {
                     matchingPieces.Add(verticalPieces[i]);
                     Debug.Log("PieceTypeVerticalList: " + verticalPieces[i].ItemComponent.Item);
+                }
+            }
+            // Traverse horizontal if we found a match (3 or more pieces)
+            if (verticalPieces.Count >= 3)
+            {
+                for (int i = 0; i < verticalPieces.Count; i++)
+                {
+                    for (int dir = 0; dir <= 1; dir++)
+                    {
+                        for (int xOffset = 1; xOffset < xDim; xOffset++)
+                        {
+                            int x;
+                            if (dir == 0) x = NewX - xOffset; // left
+                            else x = NewX + xOffset; //right
+                            if (x < 0 || x >= xDim) break;
+                            if (_pieces[x, verticalPieces[i].Y].IsItemed() && _pieces[x, verticalPieces[i].Y].ItemComponent.Item == type)
+                            {
+                                verticalPieces.Add(_pieces[x, verticalPieces[i].Y]);
+                            }
+                            else break;
+                        }
+                    }
+                    if (horizontalPieces.Count < 2)
+                        horizontalPieces.Clear();
+                    else
+                    {
+                        for (int j = 0; j < horizontalPieces.Count; j++)
+                        {
+                            matchingPieces.Add(horizontalPieces[j]);
+                        }
+                        break;
+                    }
                 }
             }
             if (matchingPieces.Count >= 3)
@@ -360,15 +444,10 @@ public class Grid : MonoBehaviour
     }
     public bool ClearPiece(int x, int y)
     {
-        int tmpx = 0, tmpy = 0;
-        GamePieces piece = new GamePieces();
-        piece.X = x;
-        piece.Y = y;
-        Debug.Log("PieceClearedValueable" + tmpx + " " + tmpy);
-        if (_pieces[tmpx, tmpy].IsClearable() && !_pieces[tmpx, tmpy].ClearableComponent.IsBeingCleared)
+        if (_pieces[x, y].IsClearable() && !_pieces[x, y].ClearableComponent.IsBeingCleared)
         {
-            _pieces[tmpx, tmpy].ClearableComponent.Clear();
-            SpawnNewPiece(tmpx, tmpy, PieceType.EMPTY);
+            _pieces[x, y].ClearableComponent.Clear();
+            SpawnNewPiece(x, y, PieceType.EMPTY);
             return true;
         }
         return false;

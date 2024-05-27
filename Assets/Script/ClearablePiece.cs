@@ -11,18 +11,19 @@ public class ClearablePiece : MonoBehaviour
         get { return isBeingCleared; }
     }
     protected GamePieces piece;
-    private void Awake() {
+    void Awake()
+    {
         piece = GetComponent<GamePieces>();
     }
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public void Clear()
     {
@@ -32,7 +33,7 @@ public class ClearablePiece : MonoBehaviour
     private IEnumerator ClearCoroutine()
     {
         Animator animator = GetComponent<Animator>();
-        if(animator)
+        if (animator)
         {
             animator.Play(clearAnimation.name);
             yield return new WaitForSeconds(clearAnimation.length);
