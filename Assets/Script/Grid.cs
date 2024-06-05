@@ -41,31 +41,17 @@ public class Grid : MonoBehaviour
 
     public Vector2[,] backgroundPositions;
 
-    private GameObject prefab;  // the variable must be declared prior to use
-    private float prefabWidth;
-    private float prefabHeigt;
     // biến nãy sinh trong quá trình
-    private GameObject newPieces;
-
-    public Vector3 oldPrefabPos;  // tạo một biến oldprefab chứa position
-    public Vector2 prefabSize;
-    public Vector3 firstPrefab;
     private GamePieces pressedPiece;
     private GamePieces enteredPiece;
     // Update is called once per 
     private TimeBar.Role role;
     [SerializeField] public TimeBar timeswap;
+    public bool isFilling { get; private set; }
     void Awake()
     {
-        newPieces = new GameObject();
-        oldPrefabPos = new Vector3(-6, -6, 0);
-        prefabSize = new Vector2(0, 0);
-        firstPrefab = new Vector3(oldPrefabPos.x, 0, 0);
         role = TimeBar.Role.Player;
         timeswap = FindObjectOfType<TimeBar>();
-    }
-    void Start()
-    {
         _piecePrefabDict = new Dictionary<PieceType, GameObject>();
         for (int i = 0; i < piecePrefabs.Length; i++)
         {
@@ -83,11 +69,21 @@ public class Grid : MonoBehaviour
             }
         }
         _pieces = new GamePieces[xDim, yDim];
+        for (int i = 0; i < initialPieces.Length; i++)
+        {
+            if (initialPieces[i].x >= 0 && initialPieces[i].x < xDim && initialPieces[i].y >= 0 && initialPieces[i].y < yDim)
+            {
+                SpawnNewPiece(initialPieces[i].x, initialPieces[i].y, initialPieces[i].type);
+            }
+        }
         for (int x = 0; x < xDim; x++)
         {
             for (int y = 0; y < yDim; y++)
             {
-                SpawnNewPiece(x, y, PieceType.EMPTY);
+                if (_pieces[x, y] == null)
+                {
+                    SpawnNewPiece(x, y, PieceType.EMPTY);
+                }
             }
         }
         StartCoroutine(Fill());
@@ -95,25 +91,19 @@ public class Grid : MonoBehaviour
 
     public IEnumerator Fill()
     {
-        // for (int i = 0; i < _pieces.GetLength(0); i++)
-        // {
-        //     for (int j = 0; j < _pieces.GetLength(1); j++)
-        //     {
-        //         GamePieces piece = _pieces[i, j];
-        //         Debug.Log("Value of arrays _piece " + _pieces[i, j] + " is " + piece.X + " " + piece.Y);
-        //     }
-        // }
         bool needRefill = true;
+        isFilling = true;
         while (needRefill)
         {
             yield return new WaitForSeconds(FillTime);
             while (FillStep())
             {
-                _inverse = !_inverse;
+                //_inverse = !_inverse;
                 yield return new WaitForSeconds(FillTime);
             }
             needRefill = ClearAllValidMatches();
         }
+        isFilling = false;
     }
     public bool FillStep()
     {
@@ -159,54 +149,6 @@ public class Grid : MonoBehaviour
         }
         return movedPiece;
     }
-    void callChessBoard()
-    {
-        backgroundPositions = new Vector2[xDim, yDim];
-        _piecePrefabDict = new Dictionary<PieceType, GameObject>();
-        for (int i = 0; i < piecePrefabs.Length; i++)
-        {
-            if (!_piecePrefabDict.ContainsKey(piecePrefabs[i].type))
-            {
-                _piecePrefabDict.Add(piecePrefabs[i].type, piecePrefabs[i].prefab);
-            }
-        }
-        Vector3 oldPrefabPos = new Vector3(-6, -6, -4);  // tạo một biến oldprefab chứa position
-        Vector2 prefabSize = new Vector2(0, 0);
-        Vector3 firstPrefab = new Vector3(oldPrefabPos.x, 0, 0);
-        _pieces = new GamePieces[xDim, yDim];
-        for (int x = 0; x < xDim; x++)
-        {
-            for (int y = 0; y < yDim; y++)
-            {
-                // set POISITION cho prefabBackground
-                GameObject background = (GameObject)Instantiate(backgroundPrefab, GetWorldPosition(oldPrefabPos.x, oldPrefabPos.y, -4), Quaternion.identity);
-
-                background.name = "Prefab " + "[" + x + "," + y + "]" + "[" + oldPrefabPos.x + "," + oldPrefabPos.y + "," + oldPrefabPos.z + "]";
-                prefabSize = GetPrefabSize(background);
-                // lấy scale của prefab
-                prefabWidth = Mathf.RoundToInt(prefabSize.x);
-                prefabHeigt = Mathf.RoundToInt(prefabSize.y);
-
-                background.transform.parent = transform;
-                SpawnNewPiece(x, y, PieceType.EMPTY);
-                backgroundPositions[x, y] = oldPrefabPos;           // SAU KHI DUYỆT XONG THÌ CỘNG TIẾP WIDTH CỦA PREFAB ĐỂ CÓ THỂ RESET LẠI DÒNG
-                oldPrefabPos.x += prefabWidth;
-            }
-            prefabWidth = 0;
-            oldPrefabPos.x = firstPrefab.x;  // số position x khi reset về vẫn chưa hoàng hảo lắm.
-            oldPrefabPos.y += prefabHeigt;
-        }
-        for (int i = 0; i < backgroundPositions.GetLength(0); i++)
-        {
-            for (int j = 0; j < backgroundPositions.GetLength(1); j++)
-            {
-                Debug.Log("Position at background [" + i + ", " + j + "]: " + backgroundPositions[i, j]);
-            }
-        }
-        // Destroy(_pieces[3, 3].gameObject);
-        // SpawnNewPiece(3, 3, PieceType.BUBBLE, oldPrefabPos);
-        //StartCoroutine(Fill());
-    }
 
 
     public GamePieces SpawnNewPiece(int x, int y, PieceType type)
@@ -240,12 +182,15 @@ public class Grid : MonoBehaviour
             int piece1Y = piece1.Y;
             piece1.MovableComponent.Move(piece2.X, piece2.Y, FillTime);
             piece2.MovableComponent.Move(piece1X, piece1Y, FillTime);
+            timeswap.SwapRole();
             ClearAllValidMatches();
             StartCoroutine(Fill());
         }
         else
         {
             StartCoroutine(SwapPiecesBack(piece1, piece2, FillTime));
+            // _pieces[piece1.X, piece1.Y] = piece1;
+            // _pieces[piece2.X, piece2.Y] = piece2;
         }
     }
     IEnumerator SwapPiecesBack(GamePieces piece1, GamePieces piece2, float delay)
@@ -416,7 +361,7 @@ public class Grid : MonoBehaviour
         }
         return null;
     }
-    public bool ClearAllValidMatches()
+    private bool ClearAllValidMatches()
     {
         bool needRefill = false;
         for (int y = 0; y < yDim; y++)
@@ -497,59 +442,7 @@ public class Grid : MonoBehaviour
                 SwapPiece(pressedPiece, enteredPiece);
                 //Debug.Log("piece after swap: "+ "Piece1: " + pressedPiece.X + " " + pressedPiece.Y + "Piece2: " + enteredPiece.X + " " + enteredPiece.Y);
             }
-            timeswap.SwapRole();
         }
     }
 }
 
-
-
-
-// void callChessBoard()
-//     {
-//         backgroundPositions = new Vector2[xDim, yDim];
-//         _piecePrefabDict = new Dictionary<PieceType, GameObject>();
-//         for (int i = 0; i < piecePrefabs.Length; i++)
-//         {
-//             if (!_piecePrefabDict.ContainsKey(piecePrefabs[i].type))
-//             {
-//                 _piecePrefabDict.Add(piecePrefabs[i].type, piecePrefabs[i].prefab);
-//             }
-//         }
-//         Vector3 oldPrefabPos = new Vector3(-6, -6, -4);  // tạo một biến oldprefab chứa position
-//         Vector2 prefabSize = new Vector2(0, 0);
-//         Vector3 firstPrefab = new Vector3(oldPrefabPos.x, 0, 0);
-//         _pieces = new GamePieces[xDim, yDim];
-//         for (int x = 0; x < xDim; x++)
-//         {
-//             for (int y = 0; y < yDim; y++)
-//             {
-//                 // set POISITION cho prefabBackground
-//                 GameObject background = (GameObject)Instantiate(backgroundPrefab, GetWorldPosition(oldPrefabPos.x, oldPrefabPos.y, -4), Quaternion.identity);
-
-//                 background.name = "Prefab " + "[" + x + "," + y + "]" + "[" + oldPrefabPos.x + "," + oldPrefabPos.y + "," + oldPrefabPos.z + "]";
-//                 prefabSize = GetPrefabSize(background);
-//                 // lấy scale của prefab
-//                 prefabWidth = Mathf.RoundToInt(prefabSize.x);
-//                 prefabHeigt = Mathf.RoundToInt(prefabSize.y);
-
-//                 background.transform.parent = transform;
-//                 SpawnNewPiece(x, y, PieceType.EMPTY, oldPrefabPos);
-//                 backgroundPositions[x, y] = oldPrefabPos;           // SAU KHI DUYỆT XONG THÌ CỘNG TIẾP WIDTH CỦA PREFAB ĐỂ CÓ THỂ RESET LẠI DÒNG
-//                 oldPrefabPos.x += prefabWidth;
-//             }
-//             prefabWidth = 0;
-//             oldPrefabPos.x = firstPrefab.x;  // số position x khi reset về vẫn chưa hoàng hảo lắm.
-//             oldPrefabPos.y += prefabHeigt;
-//         }
-//         for (int i = 0; i < backgroundPositions.GetLength(0); i++)
-//         {
-//             for (int j = 0; j < backgroundPositions.GetLength(1); j++)
-//             {
-//                 Debug.Log("Position at background [" + i + ", " + j + "]: " + backgroundPositions[i, j]);
-//             }
-//         }
-//         // Destroy(_pieces[3, 3].gameObject);
-//         // SpawnNewPiece(3, 3, PieceType.BUBBLE, oldPrefabPos);
-//         //StartCoroutine(Fill());
-//     }

@@ -28,13 +28,12 @@ ScriptsOnlyBuild:
     - TMPro.TMP_Settings
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
+    - TMPro.TextMeshProUGUI
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -75,6 +74,7 @@ ScriptsOnlyBuild:
     - TMPro.TMP_SpriteCharacter
     - TMPro.TMP_SpriteGlyph
     - TMPro.TMP_Style
+    - TMPro.VertexGradient
     UnityEngine.CoreModule:
     - UnityEngine.Events.PersistentCallGroup
     UnityEngine.TextCoreFontEngineModule:
@@ -157,6 +157,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 5922}
     - Class: 114
       Script: {instanceID: 6502}
+    - Class: 114
+      Script: {instanceID: 6702}
     - Class: 114
       Script: {instanceID: 7094}
     - Class: 114
@@ -1396,7 +1398,7 @@ ScriptsOnlyBuild:
     className: IsGoldenSword
   - hash:
       serializedVersion: 2
-      Hash: 4fc9ae20939b1f4c4527142d1b1f25ca
+      Hash: 28b498fabc4e10be03306650703e7480
     assemblyName: core.dll
     namespaceName: 
     className: Grid
