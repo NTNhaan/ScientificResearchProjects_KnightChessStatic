@@ -351,6 +351,7 @@
 "Assets/Script/NewBehaviourScript.cs"
 "Assets/Script/NewBehaviourScript1.cs"
 "Assets/Script/PlayerManager.cs"
+"Assets/Script/SwapTurn.cs"
 "Assets/Script/TimeBar.cs"
 -langversion:9.0
 

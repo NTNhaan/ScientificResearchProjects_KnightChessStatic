@@ -37,7 +37,7 @@ public class ItemPieces : MonoBehaviour
         public ItemType item;
         public Sprite sprite;
     }
-    public ItemSprite[] itemSprites;
+    public ItemSprite[] itemSprites; // mảng chứa các hình ảnh
     private ItemType item;
     public ItemType Item
     {

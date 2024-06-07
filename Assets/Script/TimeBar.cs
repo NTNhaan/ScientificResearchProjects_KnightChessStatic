@@ -14,7 +14,8 @@ public class TimeBar : MonoBehaviour
     public Slider TimeSliderHero;
     public float MaxTime = 100;
     public Role role;
-    public void Awake() {
+    public void Awake()
+    {
         TimeSliderHero.value = MaxTime;
         TimeSliderDemon.value = MaxTime;
     }
@@ -24,13 +25,13 @@ public class TimeBar : MonoBehaviour
     }
     public void SwapRole()
     {
-        if(role == Role.Player)
+        if (role == Role.Player)
         {
             role = Role.Demon;
             //Debug.Log("Role: " + role);
             TimeSliderHero.value = MaxTime;
         }
-        else if(role == Role.Demon)
+        else if (role == Role.Demon)
         {
             role = Role.Player;
             //Debug.Log("Role: " + role);
@@ -39,17 +40,22 @@ public class TimeBar : MonoBehaviour
     }
     public void Update()
     {
-        if(role == Role.Player)
+        if (role == Role.Player)
         {
             TimeSliderHero.value -= Time.deltaTime * 10;
-            if(TimeSliderHero.value <= 0)
+            if (TimeSliderHero.value <= 0)
+            {
                 SwapRole();
+            }
         }
-        else if(role == Role.Demon)
+        else if (role == Role.Demon)
         {
             TimeSliderDemon.value -= Time.deltaTime * 10;
-            if(TimeSliderDemon.value <= 0)
+            if (TimeSliderDemon.value <= 0)
+            {
                 SwapRole();
+            }
         }
     }
+
 }

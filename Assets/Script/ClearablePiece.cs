@@ -11,10 +11,12 @@ public class ClearablePiece : MonoBehaviour
         get { return isBeingCleared; }
     }
     protected GamePieces piece;
+
     void Awake()
     {
         piece = GetComponent<GamePieces>();
     }
+
     void Start()
     {
 
@@ -23,7 +25,6 @@ public class ClearablePiece : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
     public void Clear()
     {
