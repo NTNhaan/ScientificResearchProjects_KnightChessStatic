@@ -350,6 +350,7 @@
 "Assets/Script/MovablePiece.cs"
 "Assets/Script/NewBehaviourScript.cs"
 "Assets/Script/NewBehaviourScript1.cs"
+"Assets/Script/Piece_Reward.cs"
 "Assets/Script/PlayerManager.cs"
 "Assets/Script/SwapTurn.cs"
 "Assets/Script/TimeBar.cs"

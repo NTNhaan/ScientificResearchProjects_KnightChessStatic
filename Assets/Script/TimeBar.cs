@@ -28,13 +28,13 @@ public class TimeBar : MonoBehaviour
         if (role == Role.Player)
         {
             role = Role.Demon;
-            //Debug.Log("Role: " + role);
+            // Debug.Log("Role: " + role);
             TimeSliderHero.value = MaxTime;
         }
         else if (role == Role.Demon)
         {
             role = Role.Player;
-            //Debug.Log("Role: " + role);
+            // Debug.Log("Role: " + role);
             TimeSliderDemon.value = MaxTime;
         }
     }

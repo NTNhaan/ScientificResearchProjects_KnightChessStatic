@@ -1,8 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net;
-using Mono.Cecil.Cil;
+using Codice.Client.BaseCommands.Download;
 using UnityEngine;
 using UnityEngine.UI;
 public class Grid : MonoBehaviour
@@ -48,12 +47,14 @@ public class Grid : MonoBehaviour
     private GamePieces enteredPiece;
     // Update is called once per 
     private TimeBar.Role role;
-    [SerializeField] public TimeBar timeswap;
+    [SerializeField] private TimeBar timeswap;
     public bool isFilling { get; private set; }
-    private void Awake()
+    public Piece_Reward pieceReward;
+    public void Awake()
     {
         role = TimeBar.Role.Player;
         timeswap = FindObjectOfType<TimeBar>();
+
     }
     public void Start()
     {
@@ -378,6 +379,12 @@ public class Grid : MonoBehaviour
                     if (match == null) continue;
                     foreach (var gamePiece in match)
                     {
+                        BoxCollider2D boxCollider = gamePiece.GetComponent<BoxCollider2D>();
+                        if (boxCollider != null)
+                        {
+                            boxCollider.enabled = false;
+                        }
+                        pieceReward.StartCoinMove(gamePiece.transform.position, gamePiece.gameObject);
                         if (!ClearPiece(gamePiece.X, gamePiece.Y)) continue;
                         needRefill = true;
                     }
@@ -397,6 +404,7 @@ public class Grid : MonoBehaviour
         }
         return false;
     }
+
     Vector2 GetPrefabSize(GameObject prefab)
     {
         Renderer prefabRederer = prefab.GetComponent<Renderer>();

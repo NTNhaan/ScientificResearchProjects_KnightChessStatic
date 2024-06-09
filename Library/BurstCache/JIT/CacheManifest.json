@@ -7,7 +7,7 @@
     },
     {
       "FullName": "Unity.2D.Animation.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-      "LastWriteTime": "2024-05-27T08:35:03.7501125Z"
+      "LastWriteTime": "2024-06-09T18:25:32.878669Z"
     },
     {
       "FullName": "mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
@@ -15,15 +15,15 @@
     },
     {
       "FullName": "Unity.Mathematics, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-      "LastWriteTime": "2024-05-27T08:35:03.7671138Z"
+      "LastWriteTime": "2024-06-09T18:25:32.8826702Z"
     },
     {
       "FullName": "Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-      "LastWriteTime": "2024-05-27T08:35:03.7531131Z"
+      "LastWriteTime": "2024-06-09T18:25:32.8676662Z"
     },
     {
       "FullName": "Unity.2D.Common.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-      "LastWriteTime": "2024-05-27T08:35:03.7441099Z"
+      "LastWriteTime": "2024-06-09T18:25:32.8836708Z"
     },
     {
       "FullName": "UnityEditor.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -31,31 +31,31 @@
     },
     {
       "FullName": "Unity.2D.Psdimporter.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-      "LastWriteTime": "2024-05-27T08:35:03.7481112Z"
+      "LastWriteTime": "2024-06-09T18:25:32.8686665Z"
     },
     {
       "FullName": "PsdPlugin, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-      "LastWriteTime": "2024-05-27T08:35:03.7371072Z"
+      "LastWriteTime": "2024-06-09T18:25:32.8956734Z"
     },
     {
       "FullName": "Unity.2D.Animation.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-      "LastWriteTime": "2024-05-27T08:35:03.761114Z"
+      "LastWriteTime": "2024-06-09T18:25:32.8916721Z"
     },
     {
       "FullName": "Unity.2D.Common.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-      "LastWriteTime": "2024-05-27T08:35:03.761114Z"
+      "LastWriteTime": "2024-06-09T18:25:32.8846701Z"
     },
     {
       "FullName": "Unity.2D.SpriteShape.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-      "LastWriteTime": "2024-05-27T08:35:03.761114Z"
-    },
-    {
-      "FullName": "UnityEngine.SpriteShapeModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-      "LastWriteTime": "2023-04-09T01:48:34Z"
+      "LastWriteTime": "2024-06-09T18:25:32.8776698Z"
     },
     {
       "FullName": "mscorlib, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
       "LastWriteTime": "2023-04-09T01:21:10Z"
+    },
+    {
+      "FullName": "UnityEngine.SpriteShapeModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "LastWriteTime": "2023-04-09T01:48:34Z"
     }
   ],
   "Functions": [
@@ -168,6 +168,7 @@
         0,
         11,
         12,
+        13,
         2,
         3,
         5
@@ -194,7 +195,6 @@
       "AssemblyDependencyIndices": [
         0,
         10,
-        13,
         2
       ]
     },
