@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,12 +11,23 @@ public class TimeBar : MonoBehaviour
         Player,
         Demon
     }
+    public static TimeBar Instance { get; private set; }
     public Slider TimeSliderDemon;
     public Slider TimeSliderHero;
     public float MaxTime = 100;
     public Role role;
+    public Animator animator;
+    private bool isPaused = false;
     public void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         TimeSliderHero.value = MaxTime;
         TimeSliderDemon.value = MaxTime;
     }
@@ -27,35 +39,48 @@ public class TimeBar : MonoBehaviour
     {
         if (role == Role.Player)
         {
+            isPaused = false;
             role = Role.Demon;
-            // Debug.Log("Role: " + role);
             TimeSliderHero.value = MaxTime;
+
         }
         else if (role == Role.Demon)
         {
+            isPaused = false;
             role = Role.Player;
-            // Debug.Log("Role: " + role);
             TimeSliderDemon.value = MaxTime;
         }
     }
+    public void ResetAnimation()
+    {
+        animator.ResetTrigger("StartTurn");
+        animator.ResetTrigger("StartTurnBack");
+    }
+    public void PlayAnimation(string nametrigger)
+    {
+        animator.SetTrigger(nametrigger);
+    }
     public void Update()
     {
-        if (role == Role.Player)
+        if (role == Role.Player && !isPaused)
         {
             TimeSliderHero.value -= Time.deltaTime * 10;
             if (TimeSliderHero.value <= 0)
             {
-                SwapRole();
+                PlayAnimation("StartTurn");
             }
         }
-        else if (role == Role.Demon)
+        if (role == Role.Demon && !isPaused)
         {
             TimeSliderDemon.value -= Time.deltaTime * 10;
             if (TimeSliderDemon.value <= 0)
             {
-                SwapRole();
+                PlayAnimation("StartTurnBack");
             }
         }
     }
-
+    public void Pause()
+    {
+        isPaused = true;
+    }
 }

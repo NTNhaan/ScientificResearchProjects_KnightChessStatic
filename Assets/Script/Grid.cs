@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Codice.Client.BaseCommands.Download;
 using UnityEngine;
-using UnityEngine.UI;
 public class Grid : MonoBehaviour
 {
     public enum PieceType
@@ -49,7 +46,7 @@ public class Grid : MonoBehaviour
     private TimeBar.Role role;
     [SerializeField] private TimeBar timeswap;
     public bool isFilling { get; private set; }
-    public Piece_Reward pieceReward;
+    public PieceReward pieceReward;
     public void Awake()
     {
         role = TimeBar.Role.Player;
@@ -189,7 +186,16 @@ public class Grid : MonoBehaviour
             int piece1Y = piece1.Y;
             piece1.MovableComponent.Move(piece2.X, piece2.Y, FillTime);
             piece2.MovableComponent.Move(piece1X, piece1Y, FillTime);
-            //timeswap.SwapRole();
+            if (timeswap.role == TimeBar.Role.Player)
+            {
+                timeswap.Pause();
+                timeswap.PlayAnimation("StartTurn");
+            }
+            else if (timeswap.role == TimeBar.Role.Demon)
+            {
+                timeswap.Pause();
+                timeswap.PlayAnimation("StartTurnBack");
+            }
             ClearAllValidMatches();
             StartCoroutine(Fill());
         }
@@ -448,7 +454,6 @@ public class Grid : MonoBehaviour
             {
                 Debug.Log("IsAdjacent is true =))");
                 SwapPiece(pressedPiece, enteredPiece);
-                //Debug.Log("piece after swap: "+ "Piece1: " + pressedPiece.X + " " + pressedPiece.Y + "Piece2: " + enteredPiece.X + " " + enteredPiece.Y);
             }
         }
     }

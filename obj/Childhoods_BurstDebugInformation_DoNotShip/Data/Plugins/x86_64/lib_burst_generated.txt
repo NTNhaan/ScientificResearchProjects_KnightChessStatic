@@ -132,6 +132,7 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.Burst.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.2D.Animation.Runtime.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.TextMeshPro.dll
+--root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\core.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.Timeline.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.2D.SpriteShape.Runtime.dll
@@ -139,7 +140,6 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\WhatUpGames.BehaviorTreeDebugger.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.2D.Common.Runtime.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.2D.IK.Runtime.dll
---root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\core.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.2D.Tilemap.Extras.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Assembly-CSharp-firstpass.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.InternalAPIEngineBridge.001.dll
@@ -283,6 +283,7 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.Burst.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.2D.Animation.Runtime.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.TextMeshPro.dll
+--root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\core.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.Timeline.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.2D.SpriteShape.Runtime.dll
@@ -290,7 +291,6 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\WhatUpGames.BehaviorTreeDebugger.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.2D.Common.Runtime.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.2D.IK.Runtime.dll
---root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\core.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.2D.Tilemap.Extras.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Assembly-CSharp-firstpass.dll
 --root-assembly=C:\Users\Nhan\Documents\Project\gametest\Childhoods\Temp\StagingArea\Data\Managed\Unity.InternalAPIEngineBridge.001.dll

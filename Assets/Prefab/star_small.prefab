@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3583690410927935844}
   - component: {fileID: 3583690410927935867}
   - component: {fileID: 590405853}
-  - component: {fileID: -8509192714329334179}
+  - component: {fileID: -7400208274602476757}
   m_Layer: 0
   m_Name: star_small
   m_TagString: Untagged
@@ -107,7 +107,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-8509192714329334179
+--- !u!114 &-7400208274602476757
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,5 +119,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 262a2e37c3609a64cb9651ca853cf856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swapAnimation: {fileID: 7400000, guid: 75b821bcb88b44349be4edd3c9ae86a3, type: 2}
-  swapBackAnimation: {fileID: 7400000, guid: e1f4b41375a05624db3c11508c88dac4, type: 2}
+  animator: {fileID: 590405853}

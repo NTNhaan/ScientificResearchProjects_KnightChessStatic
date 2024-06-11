@@ -1,5 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
+    Assembly-CSharp-Editor.dll:
+    - BehaviourTreeSettings
     DOTween.dll:
     - DG.Tweening.Core.DOTweenSettings
     Unity.2D.Animation.Editor.dll:
@@ -28,12 +30,15 @@ ScriptsOnlyBuild:
     - TMPro.TMP_Settings
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
-    - TMPro.TextMeshProUGUI
+    Unity.Timeline.Editor.dll:
+    - TimelinePreferences
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -55,6 +60,8 @@ ScriptsOnlyBuild:
     - HealtBar
     - ItemPieces
     - MovablePiece
+    - PieceReward
+    - SwapTurn
     - TimeBar
   serializedClasses:
     DOTween:
@@ -74,7 +81,6 @@ ScriptsOnlyBuild:
     - TMPro.TMP_SpriteCharacter
     - TMPro.TMP_SpriteGlyph
     - TMPro.TMP_Style
-    - TMPro.VertexGradient
     UnityEngine.CoreModule:
     - UnityEngine.Events.PersistentCallGroup
     UnityEngine.TextCoreFontEngineModule:
@@ -136,39 +142,41 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1628}
     - Class: 114
-      Script: {instanceID: 2302}
+      Script: {instanceID: 1714}
     - Class: 114
-      Script: {instanceID: 2682}
+      Script: {instanceID: 2304}
     - Class: 114
-      Script: {instanceID: 2800}
+      Script: {instanceID: 2684}
     - Class: 114
-      Script: {instanceID: 3038}
+      Script: {instanceID: 2802}
     - Class: 114
-      Script: {instanceID: 3474}
+      Script: {instanceID: 3040}
     - Class: 114
-      Script: {instanceID: 3826}
+      Script: {instanceID: 3476}
     - Class: 114
-      Script: {instanceID: 4654}
+      Script: {instanceID: 3828}
     - Class: 114
-      Script: {instanceID: 4970}
+      Script: {instanceID: 4656}
     - Class: 114
-      Script: {instanceID: 5810}
+      Script: {instanceID: 4972}
     - Class: 114
-      Script: {instanceID: 5922}
+      Script: {instanceID: 5812}
     - Class: 114
-      Script: {instanceID: 6502}
+      Script: {instanceID: 5924}
     - Class: 114
-      Script: {instanceID: 6702}
+      Script: {instanceID: 6504}
     - Class: 114
-      Script: {instanceID: 7094}
+      Script: {instanceID: 6884}
     - Class: 114
-      Script: {instanceID: 8230}
+      Script: {instanceID: 7098}
     - Class: 114
-      Script: {instanceID: 8476}
+      Script: {instanceID: 8234}
     - Class: 114
-      Script: {instanceID: 8812}
+      Script: {instanceID: 8480}
     - Class: 114
-      Script: {instanceID: 9204}
+      Script: {instanceID: 8816}
+    - Class: 114
+      Script: {instanceID: 9208}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -226,6 +234,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.2D.Animation.Runtime.dll
     namespaceName: UnityEngine.U2D.Animation
     className: SpriteSkin
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: core.dll
+    namespaceName: 
+    className: SwapTurn
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -1164,6 +1178,12 @@ ScriptsOnlyBuild:
     className: CheckArrays
   - hash:
       serializedVersion: 2
+      Hash: 0d59512a2aca10744df0b1ef778ec82f
+    assemblyName: core.dll
+    namespaceName: 
+    className: PieceReward
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
@@ -1398,7 +1418,7 @@ ScriptsOnlyBuild:
     className: IsGoldenSword
   - hash:
       serializedVersion: 2
-      Hash: 28b498fabc4e10be03306650703e7480
+      Hash: becf95b772f7984ffef14151b8d71e89
     assemblyName: core.dll
     namespaceName: 
     className: Grid
@@ -1560,7 +1580,7 @@ ScriptsOnlyBuild:
     className: UnityOnToggleValueChangedMessageListener
   - hash:
       serializedVersion: 2
-      Hash: eca72322b74aa0055875d5419a64317c
+      Hash: 251fba3d57f26fdf66b4569bc4d8550c
     assemblyName: core.dll
     namespaceName: 
     className: TimeBar
