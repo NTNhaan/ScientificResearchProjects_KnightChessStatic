@@ -6,16 +6,30 @@ public class SwapTurn : MonoBehaviour
 {
 
     private bool isSwapping = false;
+    public static SwapTurn Instance { get; private set; }
     public bool IsSwapping
     {
         get { return isSwapping; }
     }
+    public void StartSwap()
+    {
+        isSwapping = true;
+    }
     void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         //TimeBar.Instance.animator = GetComponent<Animator>();
     }
     public void OnAnimationEnd()
     {
+        isSwapping = false;
         TimeBar.Instance.SwapRole();
         TimeBar.Instance.ResetAnimation();
     }

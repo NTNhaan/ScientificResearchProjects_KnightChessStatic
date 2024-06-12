@@ -47,6 +47,7 @@ public class Grid : MonoBehaviour
     [SerializeField] private TimeBar timeswap;
     public bool isFilling { get; private set; }
     public PieceReward pieceReward;
+    public Animator animator;
     public void Awake()
     {
         role = TimeBar.Role.Player;
@@ -180,31 +181,49 @@ public class Grid : MonoBehaviour
         _pieces[piece2.X, piece2.Y] = piece1;
         var match1 = GetMatch(piece1, piece2.X, piece2.Y);
         var match2 = GetMatch(piece2, piece1.X, piece1.Y);
-        if (match1 != null || match2 != null)
+        int piece1X = piece1.X;
+        int piece1Y = piece1.Y;
+        piece1.MovableComponent.Move(piece2.X, piece2.Y, FillTime);
+        piece2.MovableComponent.Move(piece1X, piece1Y, FillTime);
+        if (timeswap.role == TimeBar.Role.Player)
         {
-            int piece1X = piece1.X;
-            int piece1Y = piece1.Y;
-            piece1.MovableComponent.Move(piece2.X, piece2.Y, FillTime);
-            piece2.MovableComponent.Move(piece1X, piece1Y, FillTime);
-            if (timeswap.role == TimeBar.Role.Player)
-            {
-                timeswap.Pause();
-                timeswap.PlayAnimation("StartTurn");
-            }
-            else if (timeswap.role == TimeBar.Role.Demon)
-            {
-                timeswap.Pause();
-                timeswap.PlayAnimation("StartTurnBack");
-            }
-            ClearAllValidMatches();
-            StartCoroutine(Fill());
+            timeswap.Pause();
+            // thực hiện animation của piece tạo thành match trước
+            timeswap.PlayAnimation("StartTurn");
         }
-        else
+        else if (timeswap.role == TimeBar.Role.Demon)
         {
-            StartCoroutine(SwapPiecesBack(piece1, piece2, FillTime));
-            // _pieces[piece1.X, piece1.Y] = piece1;
-            // _pieces[piece2.X, piece2.Y] = piece2;
+            timeswap.Pause();
+            timeswap.PlayAnimation("StartTurnBack");
         }
+        ClearAllValidMatches();
+        StartCoroutine(Fill());
+        // if (match1 != null || match2 != null)
+        // {
+        //     int piece1X = piece1.X;
+        //     int piece1Y = piece1.Y;
+        //     piece1.MovableComponent.Move(piece2.X, piece2.Y, FillTime);
+        //     piece2.MovableComponent.Move(piece1X, piece1Y, FillTime);
+        //     if (timeswap.role == TimeBar.Role.Player)
+        //     {
+        //         timeswap.Pause();
+        //         // thực hiện animation của piece tạo thành match trước
+        //         timeswap.PlayAnimation("StartTurn");
+        //     }
+        //     else if (timeswap.role == TimeBar.Role.Demon)
+        //     {
+        //         timeswap.Pause();
+        //         timeswap.PlayAnimation("StartTurnBack");
+        //     }
+        //     ClearAllValidMatches();
+        //     StartCoroutine(Fill());
+        // }
+        // else
+        // {
+        //     StartCoroutine(SwapPiecesBack(piece1, piece2, FillTime));
+        //     // _pieces[piece1.X, piece1.Y] = piece1;
+        //     // _pieces[piece2.X, piece2.Y] = piece2;
+        // }
     }
     IEnumerator SwapPiecesBack(GamePieces piece1, GamePieces piece2, float delay)
     {
@@ -385,6 +404,10 @@ public class Grid : MonoBehaviour
                     if (match == null) continue;
                     foreach (var gamePiece in match)
                     {
+                        if (gamePiece.ItemComponent.Item == ItemPieces.ItemType.Sword)
+                        {
+                            animator.SetTrigger("Attack3");
+                        }
                         BoxCollider2D boxCollider = gamePiece.GetComponent<BoxCollider2D>();
                         if (boxCollider != null)
                         {
@@ -443,17 +466,21 @@ public class Grid : MonoBehaviour
     }
     public void ReleasePiece()
     {
-        if (pressedPiece == enteredPiece)
+        bool Swaped = SwapTurn.Instance.IsSwapping;
+        if (!Swaped)
         {
-            Debug.Log("Overlapping piece =((");
-            return;
-        }
-        else
-        {
-            if (IsAdjacent(pressedPiece, enteredPiece))
+            if (pressedPiece == enteredPiece)
             {
-                Debug.Log("IsAdjacent is true =))");
-                SwapPiece(pressedPiece, enteredPiece);
+                Debug.Log("Overlapping piece =((");
+                return;
+            }
+            else
+            {
+                if (IsAdjacent(pressedPiece, enteredPiece))
+                {
+                    Debug.Log("IsAdjacent is true =))");
+                    SwapPiece(pressedPiece, enteredPiece);
+                }
             }
         }
     }

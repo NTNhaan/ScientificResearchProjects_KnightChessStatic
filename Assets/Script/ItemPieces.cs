@@ -6,31 +6,21 @@ public class ItemPieces : MonoBehaviour
 {
     public enum ItemType
     {
-        // YELLOW,
-        // PURPLE,
-        // RED,
-        // BLUE,
-        // GREEN,
-        // PINK,
-        // ANY,
-        // COUNT        
         Apple,
         AppleGreen,
         Beer,
         Sword,
-        Ham,
         Heart,
         Armor,
         Shield,
         Mushroom,
-        Skull,
+        Coin,
         Tourch,
-        WineBlood,
-        Wine,
+        RedPotion,
+        BluePotion,
         Any,
         Count
     }
-
     [System.Serializable]
     public struct ItemSprite
     {
@@ -41,12 +31,12 @@ public class ItemPieces : MonoBehaviour
     private ItemType item;
     public ItemType Item
     {
-        get{return item;}
-        set{SetItem(value);}
+        get { return item; }
+        set { SetItem(value); }
     }
     public int NumItems
     {
-        get{return itemSprites.Length;}
+        get { return itemSprites.Length; }
     }
     private SpriteRenderer _sprite;
     private Dictionary<ItemType, Sprite> _itemSpriteDict;
@@ -54,21 +44,20 @@ public class ItemPieces : MonoBehaviour
     {
         _sprite = transform.Find("piece").GetComponent<SpriteRenderer>();
         _itemSpriteDict = new Dictionary<ItemType, Sprite>();
-        for(int i=0 ; i < itemSprites.Length ; i++)
+        for (int i = 0; i < itemSprites.Length; i++)
         {
-            if(!_itemSpriteDict.ContainsKey(itemSprites[i].item))
+            if (!_itemSpriteDict.ContainsKey(itemSprites[i].item))
             {
                 _itemSpriteDict.Add(itemSprites[i].item, itemSprites[i].sprite);
             }
         }
     }
-
     public void SetItem(ItemType newItem)
     {
         item = newItem;
-        if(_itemSpriteDict.ContainsKey(newItem))
+        if (_itemSpriteDict.ContainsKey(newItem))
         {
             _sprite.sprite = _itemSpriteDict[newItem];
-        } 
+        }
     }
 }

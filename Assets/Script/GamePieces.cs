@@ -5,8 +5,6 @@ using UnityEngine;
 // lưu trữ bằng gamepieces thay vì gameobject
 public class GamePieces : MonoBehaviour
 {
-
-
     // -----------Properties
     private int _x;
     private int _y;
@@ -14,7 +12,6 @@ public class GamePieces : MonoBehaviour
     private Grid _grid;
     private MovablePiece movableComponent;
     private ItemPieces itemComponent;
-
     //-----------Constructor
     public int X
     {
@@ -59,8 +56,6 @@ public class GamePieces : MonoBehaviour
     {
         get { return clearablePiece; }
     }
-
-
 
     private void Awake()
     {

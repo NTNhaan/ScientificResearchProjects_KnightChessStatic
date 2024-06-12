@@ -84,13 +84,21 @@ MonoBehaviour:
   - item: 3
     sprite: {fileID: 21300000, guid: 1c65deea20e353e46b0b571555e7b095, type: 3}
   - item: 4
-    sprite: {fileID: 21300000, guid: 35089e6860afcae47ad418114e8ee1e4, type: 3}
-  - item: 5
     sprite: {fileID: 21300000, guid: d4f09601c4f90ec41b57aec9c5e77e7f, type: 3}
-  - item: 6
+  - item: 5
     sprite: {fileID: 21300000, guid: a81945b5bb226334193d44f059467088, type: 3}
-  - item: 7
+  - item: 6
     sprite: {fileID: 21300000, guid: c31a0d65b88b64346a04b15a84f0c315, type: 3}
+  - item: 7
+    sprite: {fileID: 21300000, guid: 81b8c451e7dc9d844ae6f97f7e56cebc, type: 3}
+  - item: 8
+    sprite: {fileID: 21300000, guid: 30e7d658d52e0f6468db63f40448fae8, type: 3}
+  - item: 9
+    sprite: {fileID: 21300000, guid: 3adbffe57a36fbd41a2c6d3fc3fd1710, type: 3}
+  - item: 10
+    sprite: {fileID: 21300000, guid: 2bb180ef560f15a48b1003a0f3a53b81, type: 3}
+  - item: 11
+    sprite: {fileID: 21300000, guid: d7eb3ac118f8c22489b607e1d6801bc0, type: 3}
 --- !u!61 &6633115148075533007
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -62,11 +62,13 @@ public class TimeBar : MonoBehaviour
     }
     public void Update()
     {
+        bool SwapOnBoard = SwapTurn.Instance.IsSwapping;
         if (role == Role.Player && !isPaused)
         {
             TimeSliderHero.value -= Time.deltaTime * 10;
             if (TimeSliderHero.value <= 0)
             {
+                SwapTurn.Instance.StartSwap();
                 PlayAnimation("StartTurn");
             }
         }
@@ -75,12 +77,14 @@ public class TimeBar : MonoBehaviour
             TimeSliderDemon.value -= Time.deltaTime * 10;
             if (TimeSliderDemon.value <= 0)
             {
+                SwapTurn.Instance.StartSwap();
                 PlayAnimation("StartTurnBack");
             }
         }
     }
     public void Pause()
     {
-        isPaused = true;
+        isPaused = true;  // Pause the time bar when the player is swapping
+        SwapTurn.Instance.StartSwap();  // Pauses to prevent players from swapping while the animation is running
     }
 }

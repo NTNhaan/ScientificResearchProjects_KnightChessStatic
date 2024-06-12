@@ -41463,6 +41463,7 @@ MonoBehaviour:
   initialPieces: []
   timeswap: {fileID: 0}
   pieceReward: {fileID: 1604598633}
+  animator: {fileID: 330669425}
 --- !u!212 &1192997997
 SpriteRenderer:
   m_ObjectHideFlags: 0
