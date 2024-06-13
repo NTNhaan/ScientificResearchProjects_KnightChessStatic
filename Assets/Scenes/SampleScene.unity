@@ -16246,6 +16246,7 @@ GameObject:
   - component: {fileID: 330669424}
   - component: {fileID: 330669423}
   - component: {fileID: 330669425}
+  - component: {fileID: 330669426}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -16388,6 +16389,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &330669426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330669420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da40919be839a4345bd138f46818ebc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slashEffect: {fileID: 5983462101813151186, guid: 103c8953584cd0b4c875751dd7e04adf, type: 3}
+  targetPos: {fileID: 807103514}
 --- !u!224 &337180786 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3863677987191946079, guid: 9a0ebcb3db200fe44bd9b4f3756e1c66, type: 3}
