@@ -6,6 +6,8 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
+    Unity.2D.Sprite.Editor.dll:
+    - UnityEditor.U2D.Sprites.SpriteEditorWindow
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
     - UnityEditor.Tilemaps.GridPaintingState
@@ -28,6 +30,7 @@ ScriptsOnlyBuild:
     - TMPro.TMP_Settings
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
+    - TMPro.TextMeshProUGUI
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
@@ -57,6 +60,7 @@ ScriptsOnlyBuild:
     - ItemPieces
     - MovablePiece
     - PieceReward
+    - SlashEffect
     - SwapTurn
     - TimeBar
   serializedClasses:
@@ -77,6 +81,7 @@ ScriptsOnlyBuild:
     - TMPro.TMP_SpriteCharacter
     - TMPro.TMP_SpriteGlyph
     - TMPro.TMP_Style
+    - TMPro.VertexGradient
     UnityEngine.CoreModule:
     - UnityEngine.Events.PersistentCallGroup
     UnityEngine.TextCoreFontEngineModule:
@@ -148,7 +153,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3040}
     - Class: 114
-      Script: {instanceID: 3476}
+      Script: {instanceID: 3474}
+    - Class: 114
+      Script: {instanceID: 3498}
     - Class: 114
       Script: {instanceID: 3828}
     - Class: 114
@@ -156,23 +163,27 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 4972}
     - Class: 114
-      Script: {instanceID: 5812}
+      Script: {instanceID: 5810}
     - Class: 114
-      Script: {instanceID: 5924}
+      Script: {instanceID: 5922}
     - Class: 114
-      Script: {instanceID: 6504}
+      Script: {instanceID: 6500}
     - Class: 114
-      Script: {instanceID: 6884}
+      Script: {instanceID: 6700}
     - Class: 114
-      Script: {instanceID: 7098}
+      Script: {instanceID: 6880}
     - Class: 114
-      Script: {instanceID: 8234}
+      Script: {instanceID: 7094}
     - Class: 114
-      Script: {instanceID: 8480}
+      Script: {instanceID: 8230}
     - Class: 114
-      Script: {instanceID: 8816}
+      Script: {instanceID: 8476}
     - Class: 114
-      Script: {instanceID: 9208}
+      Script: {instanceID: 8812}
+    - Class: 114
+      Script: {instanceID: 9204}
+    - Class: 114
+      Script: {instanceID: 26066}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -190,6 +201,8 @@ ScriptsOnlyBuild:
     - Class: 223
       Script: {instanceID: 0}
     - Class: 224
+      Script: {instanceID: 0}
+    - Class: 225
       Script: {instanceID: 0}
     - Class: 19719996
       Script: {instanceID: 0}
@@ -589,12 +602,6 @@ ScriptsOnlyBuild:
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: core.dll
     namespaceName: 
-    className: NewBehaviourScript1
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: core.dll
-    namespaceName: 
     className: MovablePiece
   - hash:
       serializedVersion: 2
@@ -608,6 +615,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnMouseDownMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 7fb839bb3f025f55d5dfb82158376f25
+    assemblyName: core.dll
+    namespaceName: 
+    className: SlashEffect
   - hash:
       serializedVersion: 2
       Hash: 35cd387ad92e5698154b6970e0e42b8b
@@ -947,12 +960,6 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: core.dll
-    namespaceName: 
-    className: PlayerManager
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnEndDragMessageListener
@@ -1106,12 +1113,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Sensor_HeroKnight
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: core.dll
-    namespaceName: 
-    className: NewBehaviourScript
   - hash:
       serializedVersion: 2
       Hash: 6fadcad16afb0dec564ec70157b823be
@@ -1414,7 +1415,7 @@ ScriptsOnlyBuild:
     className: IsGoldenSword
   - hash:
       serializedVersion: 2
-      Hash: becf95b772f7984ffef14151b8d71e89
+      Hash: e451c74846193d9bba7214799b24e385
     assemblyName: core.dll
     namespaceName: 
     className: Grid
