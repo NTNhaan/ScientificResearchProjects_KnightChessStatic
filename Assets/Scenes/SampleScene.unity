@@ -16603,7 +16603,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4261450449
+    rgba: 37585
   m_fontColor: {r: 0.8207547, g: 0.57102877, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -29962,7 +29962,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 1778422481
+    rgba: 37585
   m_fontColor: {r: 0.8207547, g: 0.57102877, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -41091,6 +41091,7 @@ GameObject:
   - component: {fileID: 772889896}
   - component: {fileID: 772889895}
   - component: {fileID: 772889898}
+  - component: {fileID: 772889899}
   m_Layer: 5
   m_Name: Crossfade
   m_TagString: Untagged
@@ -41106,8 +41107,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 772889893}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -17.9}
-  m_LocalScale: {x: 0.06490216, y: 0.06490216, z: 0.06490216}
+  m_LocalPosition: {x: 0, y: 0, z: -18.7}
+  m_LocalScale: {x: 0.06709258, y: 0.06709258, z: 0.06709258}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 519420032}
@@ -41120,8 +41121,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.000015258789}
-  m_SizeDelta: {x: 829, y: 462.23425}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 800, y: 447.1433}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &772889895
 MonoBehaviour:
@@ -41205,6 +41206,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &772889899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772889893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b51e54c478073a440bb142266d626008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TranslationPlayer: {fileID: 7400000, guid: 7bf08d0a16b79e0478861487feea7e44, type: 2}
+  TranslationDemon: {fileID: 7400000, guid: e634e4ed40d6e60458f3c095d7df6cb7, type: 2}
+  grid: {fileID: 0}
 --- !u!1 &780091083
 GameObject:
   m_ObjectHideFlags: 0
@@ -41857,6 +41873,7 @@ MonoBehaviour:
   timeswap: {fileID: 0}
   pieceReward: {fileID: 1604598633}
   animator: {fileID: 330669425}
+  isFilling: 0
 --- !u!212 &1192997997
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -42661,7 +42678,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278227665
+    rgba: 838898385
   m_fontColor: {r: 0.8207547, g: 0.57102877, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3

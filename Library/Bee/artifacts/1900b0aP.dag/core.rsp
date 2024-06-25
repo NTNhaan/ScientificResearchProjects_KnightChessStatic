@@ -311,6 +311,7 @@
 "Assets/Script/Grid.cs"
 "Assets/Script/HealtBar.cs"
 "Assets/Script/ItemPieces.cs"
+"Assets/Script/LevelLoader.cs"
 "Assets/Script/MovablePiece.cs"
 "Assets/Script/SwapTurn.cs"
 "Assets/Script/TimeBar.cs"

@@ -148,6 +148,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Fonts\Pixelify_Sans\README.txt" />
     <None Include="Assets\Textures\Graphic\kenney_animal-pack\Spritesheet\round_nodetails_outline.xml" />
     <None Include="Assets\Textures\Graphic\Hero_Knight_2\License.txt" />
     <None Include="Assets\TheKiwiCoder\BehaviourTree\UIBuilder\BehaviourTreeEditorStyle.uss" />
@@ -162,6 +163,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TheKiwiCoder\BehaviourTree\UIBuilder\NodeView.uxml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\TextMesh Pro\Fonts\Pixelify_Sans\OFL.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\Textures\Graphic\kenney_animal-pack\License.txt" />

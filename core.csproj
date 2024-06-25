@@ -64,18 +64,17 @@
   <ItemGroup>
     <Compile Include="Assets\Script\SwapTurn.cs" />
     <Compile Include="Assets\Script\GamePieces.cs" />
-    <Compile Include="Assets\Script\NewBehaviourScript1.cs" />
     <Compile Include="Assets\Script\MovablePiece.cs" />
-    <Compile Include="Assets\Script\PlayerManager.cs" />
-    <Compile Include="Assets\Script\ClearablePiece.cs" />
-    <Compile Include="Assets\Script\NewBehaviourScript.cs" />
+    <Compile Include="Assets\Script\AnimationPiece\SlashEffect.cs" />
+    <Compile Include="Assets\Script\AnimationPiece\ClearablePiece.cs" />
     <Compile Include="Assets\Script\HealtBar.cs" />
-    <Compile Include="Assets\Script\PieceReward.cs" />
+    <Compile Include="Assets\Script\AnimationPiece\PieceReward.cs" />
     <Compile Include="Assets\Script\Board.cs" />
     <Compile Include="Assets\Script\Grid.cs" />
     <Compile Include="Assets\Script\BackgroundTile.cs" />
     <Compile Include="Assets\Script\ItemPieces.cs" />
     <Compile Include="Assets\Script\TimeBar.cs" />
+    <Compile Include="Assets\Script\LevelLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Script\core.asmdef" />

@@ -1,12 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SwapTurn : MonoBehaviour
 {
-
     private bool isSwapping = false;
     public static SwapTurn Instance { get; private set; }
+    public static event Action OnTranslationEnd;
     public bool IsSwapping
     {
         get { return isSwapping; }
@@ -32,5 +33,13 @@ public class SwapTurn : MonoBehaviour
         isSwapping = false;
         TimeBar.Instance.SwapRole();
         TimeBar.Instance.ResetAnimation();
+    }
+    public void TranslationHero()
+    {
+        LevelLoader.Instance.LoadHero();
+    }
+    public void TranslationDemon()
+    {
+        LevelLoader.Instance.LoadDemon();
     }
 }

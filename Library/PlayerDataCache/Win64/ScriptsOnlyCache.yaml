@@ -58,6 +58,7 @@ ScriptsOnlyBuild:
     - Grid
     - HealtBar
     - ItemPieces
+    - LevelLoader
     - MovablePiece
     - PieceReward
     - SlashEffect
@@ -141,49 +142,51 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1578}
     - Class: 114
-      Script: {instanceID: 1628}
+      Script: {instanceID: 1630}
     - Class: 114
-      Script: {instanceID: 1714}
+      Script: {instanceID: 1716}
     - Class: 114
-      Script: {instanceID: 2304}
+      Script: {instanceID: 2306}
     - Class: 114
-      Script: {instanceID: 2684}
+      Script: {instanceID: 2686}
     - Class: 114
-      Script: {instanceID: 2802}
+      Script: {instanceID: 2804}
     - Class: 114
-      Script: {instanceID: 3040}
+      Script: {instanceID: 3042}
     - Class: 114
-      Script: {instanceID: 3474}
+      Script: {instanceID: 3476}
     - Class: 114
-      Script: {instanceID: 3498}
+      Script: {instanceID: 3500}
     - Class: 114
-      Script: {instanceID: 3828}
+      Script: {instanceID: 3830}
     - Class: 114
-      Script: {instanceID: 4656}
+      Script: {instanceID: 4658}
     - Class: 114
-      Script: {instanceID: 4972}
+      Script: {instanceID: 4974}
     - Class: 114
-      Script: {instanceID: 5810}
+      Script: {instanceID: 5812}
     - Class: 114
-      Script: {instanceID: 5922}
+      Script: {instanceID: 5924}
     - Class: 114
-      Script: {instanceID: 6500}
+      Script: {instanceID: 6502}
     - Class: 114
-      Script: {instanceID: 6700}
+      Script: {instanceID: 6702}
     - Class: 114
-      Script: {instanceID: 6880}
+      Script: {instanceID: 6882}
     - Class: 114
-      Script: {instanceID: 7094}
+      Script: {instanceID: 6886}
     - Class: 114
-      Script: {instanceID: 8230}
+      Script: {instanceID: 7098}
     - Class: 114
-      Script: {instanceID: 8476}
+      Script: {instanceID: 8234}
     - Class: 114
-      Script: {instanceID: 8812}
+      Script: {instanceID: 8480}
     - Class: 114
-      Script: {instanceID: 9204}
+      Script: {instanceID: 8816}
     - Class: 114
-      Script: {instanceID: 26066}
+      Script: {instanceID: 9208}
+    - Class: 114
+      Script: {instanceID: 26128}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1181,6 +1184,12 @@ ScriptsOnlyBuild:
     className: PieceReward
   - hash:
       serializedVersion: 2
+      Hash: 641a5f2b3dcea4d696d57ee119541b46
+    assemblyName: core.dll
+    namespaceName: 
+    className: LevelLoader
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
@@ -1415,7 +1424,7 @@ ScriptsOnlyBuild:
     className: IsGoldenSword
   - hash:
       serializedVersion: 2
-      Hash: e451c74846193d9bba7214799b24e385
+      Hash: 2b58c53fcc43c2a7c9cca0ea49bab089
     assemblyName: core.dll
     namespaceName: 
     className: Grid

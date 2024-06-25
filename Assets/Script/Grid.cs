@@ -45,14 +45,18 @@ public class Grid : MonoBehaviour
     // Update is called once per 
     private TimeBar.Role role;
     [SerializeField] private TimeBar timeswap;
-    public bool isFilling { get; private set; }
+
     public PieceReward pieceReward;
     public Animator animator;
+    public bool isFilling = false;
+    public void SetFilling(bool value)
+    {
+        isFilling = value;
+    }
     public void Awake()
     {
         role = TimeBar.Role.Player;
         timeswap = FindObjectOfType<TimeBar>();
-
     }
     public void Start()
     {
@@ -91,13 +95,22 @@ public class Grid : MonoBehaviour
                 }
             }
         }
-        StartCoroutine(Fill());
+        StartCoroutine(CheckAndFill());
+    }
+    private IEnumerator CheckAndFill()
+    {
+        while (true)
+        {
+            yield return new WaitUntil(() => isFilling);
+            yield return StartCoroutine(Fill());
+            isFilling = false;
+        }
     }
     public IEnumerator Fill()
     {
         bool needRefill = true;
-        //isFilling = true;
-        while (needRefill)
+        isFilling = true;
+        while (needRefill && isFilling)
         {
             yield return new WaitForSeconds(FillTime);
             while (FillStep())
@@ -107,7 +120,6 @@ public class Grid : MonoBehaviour
             }
             needRefill = ClearAllValidMatches();
         }
-        //isFilling = false;
     }
     public bool FillStep()
     {
