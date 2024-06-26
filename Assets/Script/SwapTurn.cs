@@ -36,10 +36,10 @@ public class SwapTurn : MonoBehaviour
     }
     public void TranslationHero()
     {
-        LevelLoader.Instance.LoadHero();
+        LevelLoader.Instance.TranslationPlayerAnim();
     }
     public void TranslationDemon()
     {
-        LevelLoader.Instance.LoadDemon();
+        LevelLoader.Instance.TranslationDemonAnim();
     }
 }

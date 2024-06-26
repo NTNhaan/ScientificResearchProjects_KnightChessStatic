@@ -5,13 +5,14 @@ using UnityEngine;
 public class LevelLoader : MonoBehaviour
 {
     public static LevelLoader Instance { get; private set; }
-    // public AnimationClip TranslationPlayer;
-    // public AnimationClip TranslationDemon;
-    // private bool isPlayingPlayerAnim = false;
-    // private bool isPlayingDemonAnim = false;
+    public AnimationClip TranslationPlayer;
+    public AnimationClip TranslationDemon;
+    public AnimationClip TranslationStart;
+    private bool isPlayingPlayerAnim = false;
+    private bool isPlayingDemonAnim = false;
     public Grid grid;
     private TimeBar timeBar;
-    public Animator animator;
+    private Animator animator;
     void Start()
     {
         if (Instance == null)
@@ -46,59 +47,43 @@ public class LevelLoader : MonoBehaviour
             animator.ResetTrigger("Demon");
         }
     }
-    public void LoadHero()
+    public void TranslationPlayerAnim()
     {
-
-        animator.SetTrigger("Player");
-        animator.ResetTrigger("Demon");
+        if (!isPlayingPlayerAnim)
+        {
+            //isPlayingPlayerAnim = true;
+            StartCoroutine(TranslationPlayerCoroutine());
+        }
     }
-    public void LoadDemon()
+    private IEnumerator TranslationPlayerCoroutine()
     {
-        animator.SetTrigger("Demon");
-        animator.ResetTrigger("Player");
+        isPlayingPlayerAnim = true;
+        Animator animator = GetComponent<Animator>();
+        if (animator)
+        {
+            animator.Play(TranslationPlayer.name);
+            yield return new WaitForSeconds(TranslationPlayer.length);
+        }
+        isPlayingPlayerAnim = false;
     }
-    // public void TranslationPlayerAnim()
-    // {
-    //     if (!isPlayingPlayerAnim)
-    //     {
-    //         //isPlayingPlayerAnim = true;
-    //         StartCoroutine(TranslationPlayerCoroutine());
-    //     }
-    // }
-    // private IEnumerator TranslationPlayerCoroutine()
-    // {
-    //     isPlayingPlayerAnim = true;
-    //     Animator animator = GetComponent<Animator>();
-    //     if (animator)
-    //     {
-    //         animator.Play(TranslationPlayer.name);
-    //         yield return new WaitForSeconds(TranslationPlayer.length);
-    //     }
-    //     isPlayingPlayerAnim = false;
-    // }
-    // public void TranslationDemonAnim()
-    // {
-    //     if (!isPlayingDemonAnim)
-    //         StartCoroutine(TranslationDemonCoroutine());
-    // }
-    // private IEnumerator TranslationDemonCoroutine()
-    // {
-    //     isPlayingDemonAnim = true;
-    //     Animator animator = GetComponent<Animator>();
-    //     if (animator)
-    //     {
-    //         animator.Play(TranslationDemon.name);
-    //         yield return new WaitForSeconds(TranslationDemon.length);
-    //     }
-    //     isPlayingDemonAnim = false;
-    // }
+    public void TranslationDemonAnim()
+    {
+        if (!isPlayingDemonAnim)
+            StartCoroutine(TranslationDemonCoroutine());
+    }
+    private IEnumerator TranslationDemonCoroutine()
+    {
+        isPlayingDemonAnim = true;
+        Animator animator = GetComponent<Animator>();
+        if (animator)
+        {
+            animator.Play(TranslationDemon.name);
+            yield return new WaitForSeconds(TranslationDemon.length);
+        }
+        isPlayingDemonAnim = false;
+    }
     public void Loadlevel()
     {
         grid.isFilling = true;
-    }
-    public void LoadlevelComplete()
-    {
-        // animator.ResetTrigger("Player");
-        // animator.ResetTrigger("Demon");
     }
 }

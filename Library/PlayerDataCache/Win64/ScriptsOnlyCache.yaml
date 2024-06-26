@@ -10,9 +10,13 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Sprites.SpriteEditorWindow
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
+    - UnityEditor.Tilemaps.GridBrushEditor
+    - UnityEditor.Tilemaps.GridPaintPaletteClipboard
+    - UnityEditor.Tilemaps.GridPaintPaletteWindow
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
     - UnityEditor.Tilemaps.GridPalettes
+    - UnityEditor.Tilemaps.PaintableSceneViewGrid
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
     - UnityEditor.Tilemaps.TileDragAndDropManager
@@ -142,49 +146,49 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1578}
     - Class: 114
-      Script: {instanceID: 1630}
+      Script: {instanceID: 1628}
     - Class: 114
-      Script: {instanceID: 1716}
+      Script: {instanceID: 1714}
     - Class: 114
-      Script: {instanceID: 2306}
+      Script: {instanceID: 2304}
     - Class: 114
-      Script: {instanceID: 2686}
+      Script: {instanceID: 2684}
     - Class: 114
-      Script: {instanceID: 2804}
+      Script: {instanceID: 2802}
     - Class: 114
-      Script: {instanceID: 3042}
+      Script: {instanceID: 3040}
     - Class: 114
-      Script: {instanceID: 3476}
+      Script: {instanceID: 3474}
     - Class: 114
-      Script: {instanceID: 3500}
+      Script: {instanceID: 3498}
     - Class: 114
-      Script: {instanceID: 3830}
+      Script: {instanceID: 3828}
     - Class: 114
-      Script: {instanceID: 4658}
+      Script: {instanceID: 4656}
     - Class: 114
-      Script: {instanceID: 4974}
+      Script: {instanceID: 4972}
     - Class: 114
-      Script: {instanceID: 5812}
+      Script: {instanceID: 5810}
     - Class: 114
-      Script: {instanceID: 5924}
+      Script: {instanceID: 5922}
     - Class: 114
-      Script: {instanceID: 6502}
+      Script: {instanceID: 6500}
     - Class: 114
-      Script: {instanceID: 6702}
+      Script: {instanceID: 6700}
     - Class: 114
-      Script: {instanceID: 6882}
+      Script: {instanceID: 6880}
     - Class: 114
-      Script: {instanceID: 6886}
+      Script: {instanceID: 6884}
     - Class: 114
-      Script: {instanceID: 7098}
+      Script: {instanceID: 7096}
     - Class: 114
-      Script: {instanceID: 8234}
+      Script: {instanceID: 8232}
     - Class: 114
-      Script: {instanceID: 8480}
+      Script: {instanceID: 8478}
     - Class: 114
-      Script: {instanceID: 8816}
+      Script: {instanceID: 8814}
     - Class: 114
-      Script: {instanceID: 9208}
+      Script: {instanceID: 9206}
     - Class: 114
       Script: {instanceID: 26128}
     - Class: 115
@@ -1184,7 +1188,7 @@ ScriptsOnlyBuild:
     className: PieceReward
   - hash:
       serializedVersion: 2
-      Hash: 641a5f2b3dcea4d696d57ee119541b46
+      Hash: 579139f64615e418530db6312c39df75
     assemblyName: core.dll
     namespaceName: 
     className: LevelLoader
