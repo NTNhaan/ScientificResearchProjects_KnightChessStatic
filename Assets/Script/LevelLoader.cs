@@ -7,12 +7,13 @@ public class LevelLoader : MonoBehaviour
     public static LevelLoader Instance { get; private set; }
     public AnimationClip TranslationPlayer;
     public AnimationClip TranslationDemon;
-    public AnimationClip TranslationStart;
+    //public AnimationClip TranslationStart;
     private bool isPlayingPlayerAnim = false;
     private bool isPlayingDemonAnim = false;
     public Grid grid;
     private TimeBar timeBar;
     private Animator animator;
+    public GameObject imageTranlation;
     void Start()
     {
         if (Instance == null)
@@ -27,25 +28,27 @@ public class LevelLoader : MonoBehaviour
         animator = GetComponent<Animator>();
         grid = FindObjectOfType<Grid>();
         timeBar = FindObjectOfType<TimeBar>();
+        imageTranlation.SetActive(true);
+
     }
     public void Update()
     {
-        if (timeBar.role == TimeBar.Role.Player)
-        {
-            if (timeBar.TimeSliderHero.value == 0)
-            {
-                animator.SetTrigger("Demon");
-            }
-            animator.ResetTrigger("Player");
-        }
-        else if (timeBar.role == TimeBar.Role.Demon)
-        {
-            if (timeBar.TimeSliderDemon.value == 0)
-            {
-                animator.SetTrigger("Player");
-            }
-            animator.ResetTrigger("Demon");
-        }
+        // if (timeBar.role == TimeBar.Role.Player)
+        // {
+        //     if (timeBar.TimeSliderHero.value == 0)
+        //     {
+        //         animator.SetTrigger("Demon");
+        //     }
+        //     animator.ResetTrigger("Player");
+        // }
+        // else if (timeBar.role == TimeBar.Role.Demon)
+        // {
+        //     if (timeBar.TimeSliderDemon.value == 0)
+        //     {
+        //         animator.SetTrigger("Player");
+        //     }
+        //     animator.ResetTrigger("Demon");
+        // }
     }
     public void TranslationPlayerAnim()
     {

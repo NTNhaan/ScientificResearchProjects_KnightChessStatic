@@ -46879,8 +46879,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TranslationPlayer: {fileID: 7400000, guid: 7bf08d0a16b79e0478861487feea7e44, type: 2}
   TranslationDemon: {fileID: 7400000, guid: e634e4ed40d6e60458f3c095d7df6cb7, type: 2}
-  TranslationStart: {fileID: 0}
   grid: {fileID: 0}
+  imageTranlation: {fileID: 1225472067}
 --- !u!1 &780091083
 GameObject:
   m_ObjectHideFlags: 0
@@ -47675,7 +47675,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1225472068
 RectTransform:
   m_ObjectHideFlags: 0
@@ -48338,7 +48338,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 838898385
+    rgba: 3439366865
   m_fontColor: {r: 0.8207547, g: 0.57102877, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
